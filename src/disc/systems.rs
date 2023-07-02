@@ -30,7 +30,7 @@ pub fn spawn_discs(
                         radius: 1.0,
                         height: 0.2,
                         resolution: 16,
-                        segments: 64,
+                        segments: 16,
                     }
                     .into(),
                 ),
