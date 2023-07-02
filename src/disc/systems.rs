@@ -18,7 +18,7 @@ pub fn spawn_discs(
                 GravityScale(GRAVITY),
                 Velocity {
                     linvel: Vec3::new(1.0, 1.0, 1.0),
-                    angvel: Vec3::new(51.2, 0.0, 0.0),
+                    angvel: Vec3::new(3.0, 0.0, 0.0),
                 },
                 Collider::cylinder(0.1, 1.0),
                 ColliderDebugColor(Color::hex("FFFF00").unwrap().into()),
