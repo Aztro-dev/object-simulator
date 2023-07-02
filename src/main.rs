@@ -32,7 +32,7 @@ fn main() {
             move_descend: KeyCode::Q,
             ..Default::default()
         })
-        // .add_startup_system(show_tutorial)
+        .add_startup_system(show_tutorial)
         .add_startup_system(create_light)
         .add_system(toggle_visibility)
         .add_system(close_on_esc)
