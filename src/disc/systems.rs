@@ -2,7 +2,7 @@ use crate::ToggleVisibility;
 use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
 
-const GRAVITY: f32 = 0.5;
+const GRAVITY: f32 = 2.0;
 
 pub fn spawn_discs(
     mut commands: Commands,
