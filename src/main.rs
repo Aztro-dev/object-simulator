@@ -34,6 +34,7 @@ fn main() {
         })
         .add_startup_system(show_tutorial)
         .add_startup_system(create_light)
+        .add_startup_system(spawn_field)
         .add_system(toggle_visibility)
         .add_system(close_on_esc)
         .run();
@@ -109,4 +110,24 @@ pub fn toggle_visibility(
             }
         }
     }
+}
+
+pub fn spawn_field(
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+) {
+    let size = 32.0;
+    commands
+        .spawn(PbrBundle {
+            mesh: meshes.add(shape::Box::new(size, 0.125 * size, size).into()),
+            transform: Transform::from_xyz(0.0, -size, 0.0),
+            material: materials.add(Color::hex("000000").unwrap().into()),
+            ..default()
+        })
+        .insert((
+            RigidBody::Fixed,
+            Collider::cuboid(0.5 * size, 0.0625 * size, 0.5 * size),
+            ToggleVisibility {},
+        ));
 }
