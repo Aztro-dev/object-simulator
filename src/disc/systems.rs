@@ -10,7 +10,7 @@ pub fn spawn_discs(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    if keyboard_input.just_pressed(KeyCode::O) {
+    if keyboard_input.pressed(KeyCode::O) {
         commands
             .spawn((
                 RigidBody::Dynamic,
