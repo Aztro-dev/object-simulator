@@ -2,7 +2,10 @@ use bevy::prelude::*;
 use bevy::window::*;
 use bevy_flycam::prelude::*;
 use bevy_rapier3d::prelude::*;
-use core::f32::consts::PI;
+
+mod disc;
+
+use disc::DiscPlugin;
 
 fn main() {
     App::new()
@@ -19,8 +22,9 @@ fn main() {
         .add_plugin(RapierPhysicsPlugin::<NoUserData>::default())
         .add_plugin(RapierDebugRenderPlugin::default())
         .add_plugin(PlayerPlugin)
+        .add_plugin(DiscPlugin)
         .insert_resource(MovementSettings {
-            sensitivity: 0.00015, // default: 0.00012
+            sensitivity: 0.00005, // default: 0.00012
             speed: 8.0,           // default: 12.0
         })
         .insert_resource(KeyBindings {
@@ -28,8 +32,8 @@ fn main() {
             move_descend: KeyCode::Q,
             ..Default::default()
         })
-        .add_startup_system(show_tutorial)
-        // .add_startup_system(create_light)
+        // .add_startup_system(show_tutorial)
+        .add_startup_system(create_light)
         .add_system(toggle_visibility)
         .add_system(close_on_esc)
         .run();
