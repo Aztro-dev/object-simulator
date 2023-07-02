@@ -1,3 +1,4 @@
+use crate::ToggleVisibility;
 use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
 
@@ -16,11 +17,12 @@ pub fn spawn_discs(
                 TransformBundle::from(Transform::from_xyz(0.0, 0.0, 0.0)),
                 GravityScale(GRAVITY),
                 Velocity {
-                    linvel: Vec3::new(1.0, 1.0, 1.0).normalize(),
-                    angvel: Vec3::new(0.2, 0.0, 0.0).normalize(),
+                    linvel: Vec3::new(1.0, 1.0, 1.0),
+                    angvel: Vec3::new(51.2, 0.0, 0.0),
                 },
                 Collider::cylinder(0.1, 1.0),
                 ColliderDebugColor(Color::hex("FFFF00").unwrap().into()),
+                ToggleVisibility {},
             ))
             .insert(PbrBundle {
                 mesh: meshes.add(
