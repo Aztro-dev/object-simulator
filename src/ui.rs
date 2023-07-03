@@ -28,7 +28,7 @@ fn create_ui(mut commands: Commands) {
         <body>
            <span>"Press O to spawn the objects"</span>
            <br/>
-           <span>"Press P to toggle visibility"</span>
+           <span>"Press P to show/hide hitboxes"</span>
         </body>
     });
 }
