@@ -28,7 +28,7 @@ fn main() {
         .add_plugin(UiPlugin)
         .insert_resource(MovementSettings {
             sensitivity: 0.00005, // default: 0.00012
-            speed: 8.0,           // default: 12.0
+            speed: 16.0,          // default: 12.0
         })
         .insert_resource(KeyBindings {
             move_ascend: KeyCode::E,
@@ -72,17 +72,17 @@ pub fn spawn_field(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    let size = 32.0;
+    let size = 64.0;
     commands
         .spawn(PbrBundle {
-            mesh: meshes.add(shape::Box::new(size, 0.125 * size, size).into()),
+            mesh: meshes.add(shape::Box::new(2.0 * size, 0.125 * size, 2.0 * size).into()),
             transform: Transform::from_xyz(0.0, -size, 0.0),
             material: materials.add(Color::hex("000000").unwrap().into()),
             ..default()
         })
         .insert((
             RigidBody::Fixed,
-            Collider::cuboid(0.5 * size, 0.0625 * size, 0.5 * size),
+            Collider::cuboid(size, 0.0625 * size, size),
             ToggleVisibility {},
         ));
 }
