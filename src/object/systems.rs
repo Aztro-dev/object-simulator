@@ -4,12 +4,13 @@ use bevy_rapier3d::prelude::*;
 
 const GRAVITY: f32 = 2.0;
 
-pub fn spawn_discs(
+pub fn spawn_objects(
     mut commands: Commands,
     keyboard_input: Res<Input<KeyCode>>,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
+    let object_color = Color::hex("FDDA03").unwrap();
     if keyboard_input.pressed(KeyCode::O) {
         commands
             .spawn((
@@ -21,7 +22,7 @@ pub fn spawn_discs(
                     angvel: Vec3::new(3.0, 0.0, 0.0),
                 },
                 Collider::cylinder(0.1, 1.0),
-                ColliderDebugColor(Color::hex("FFFF00").unwrap().into()),
+                ColliderDebugColor(object_color.into()),
                 ToggleVisibility {},
             ))
             .insert(PbrBundle {
@@ -34,9 +35,8 @@ pub fn spawn_discs(
                     }
                     .into(),
                 ),
-                material: materials.add(Color::hex("FFFF00").unwrap().into()),
+                material: materials.add(object_color.into()),
                 ..default()
             });
-        // Spawn discs
     }
 }

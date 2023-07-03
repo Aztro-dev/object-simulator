@@ -3,16 +3,16 @@ use bevy::window::*;
 use bevy_flycam::prelude::*;
 use bevy_rapier3d::prelude::*;
 
-mod disc;
+mod object;
 
-use disc::DiscPlugin;
+use object::ObjectPlugin;
 
 fn main() {
     App::new()
         .insert_resource(ClearColor(Color::hex("333333").unwrap()))
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
-                title: "Disc Test".into(),
+                title: "Object Test".into(),
                 fit_canvas_to_parent: true,
                 present_mode: PresentMode::AutoNoVsync,
                 ..default()
@@ -22,7 +22,7 @@ fn main() {
         .add_plugin(RapierPhysicsPlugin::<NoUserData>::default())
         .add_plugin(RapierDebugRenderPlugin::default())
         .add_plugin(PlayerPlugin)
-        .add_plugin(DiscPlugin)
+        .add_plugin(ObjectPlugin)
         .insert_resource(MovementSettings {
             sensitivity: 0.00005, // default: 0.00012
             speed: 8.0,           // default: 12.0
