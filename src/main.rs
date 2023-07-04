@@ -45,7 +45,7 @@ fn main() {
 pub fn create_light(mut commands: Commands) {
     commands.insert_resource(AmbientLight {
         color: Color::WHITE,
-        brightness: 2.0,
+        brightness: 8.0,
     });
 }
 
