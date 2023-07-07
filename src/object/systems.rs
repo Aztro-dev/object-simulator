@@ -24,7 +24,7 @@ pub fn spawn_objects(
     // let object_color = Color::hex("FDDA03").unwrap();
     let object_color = Color::rgba(0.0, 0.0, 0.0, 0.0);
     let object_size = 2.0;
-    if keyboard_input.just_pressed(KeyCode::O) {
+    if keyboard_input.pressed(KeyCode::O) {
         if let Some(gltf) = assets_gltf.get(&my.0) {
             commands
                 .spawn((
