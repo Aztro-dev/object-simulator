@@ -27,8 +27,8 @@ fn main() {
         .add_plugin(ObjectPlugin)
         .add_plugin(UiPlugin)
         .insert_resource(MovementSettings {
-            sensitivity: 0.00005, // default: 0.00012
-            speed: 16.0,          // default: 12.0
+            sensitivity: 0.00020, // default: 0.00012
+            speed: 256.0,         // default: 12.0
         })
         .insert_resource(KeyBindings {
             move_ascend: KeyCode::E,

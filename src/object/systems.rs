@@ -11,6 +11,7 @@ pub fn spawn_objects(
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
     let object_color = Color::hex("FDDA03").unwrap();
+    let object_size = 2.0;
     if keyboard_input.pressed(KeyCode::O) {
         commands
             .spawn((
@@ -21,15 +22,15 @@ pub fn spawn_objects(
                     linvel: Vec3::new(1.0, 1.0, 1.0),
                     angvel: Vec3::new(3.0, 0.0, 0.0),
                 },
-                Collider::cylinder(0.1, 1.0),
+                Collider::cylinder(0.1 * object_size, object_size),
                 ColliderDebugColor(object_color.into()),
                 ToggleVisibility {},
             ))
             .insert(PbrBundle {
                 mesh: meshes.add(
                     shape::Cylinder {
-                        radius: 1.0,
-                        height: 0.2,
+                        radius: object_size,
+                        height: 0.2 * object_size,
                         resolution: 16,
                         segments: 16,
                     }
