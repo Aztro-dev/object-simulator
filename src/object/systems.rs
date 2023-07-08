@@ -21,8 +21,8 @@ pub fn spawn_objects(
     my: Res<MyAssetPack>,
     assets_gltf: Res<Assets<Gltf>>,
 ) {
-    let object_color = Color::hex("#44b748").unwrap();
-    // let object_color = Color::rgba(0.0, 0.0, 0.0, 0.0);
+    let object_debug_color = Color::hex("#44b748").unwrap();
+    // let object_debug_color = Color::rgba(0.0, 0.0, 0.0, 0.0);
     let object_size = 2.0;
     // let object_size = 7.0;
     if keyboard_input.pressed(KeyCode::O) {
@@ -38,7 +38,7 @@ pub fn spawn_objects(
                     },
                     Collider::cuboid(object_size, 0.7 * object_size, 2.6 * object_size),
                     // Collider::ball(object_size),
-                    ColliderDebugColor(object_color.into()),
+                    ColliderDebugColor(object_debug_color.into()),
                     ToggleVisibility {},
                 ))
                 .insert(SceneBundle {
