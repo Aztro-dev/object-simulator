@@ -28,7 +28,7 @@ fn main() {
         .add_plugin(UiPlugin)
         .insert_resource(MovementSettings {
             sensitivity: 0.00020, // default: 0.00012
-            speed: 256.0,         // default: 12.0
+            speed: 16.0,         // default: 12.0
         })
         .insert_resource(KeyBindings {
             move_ascend: KeyCode::E,
@@ -45,7 +45,7 @@ fn main() {
 pub fn create_light(mut commands: Commands) {
     commands.insert_resource(AmbientLight {
         color: Color::WHITE,
-        brightness: 2.0,
+        brightness: 1.0,
     });
 }
 
@@ -72,7 +72,7 @@ pub fn spawn_field(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    let size = 1024.0;
+    let size = 16.0;
     commands
         .spawn(PbrBundle {
             mesh: meshes.add(shape::Box::new(2.0 * size, 0.125 * size, 2.0 * size).into()),

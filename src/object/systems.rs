@@ -9,7 +9,7 @@ const GRAVITY: f32 = 8.0;
 pub struct MyAssetPack(Handle<Gltf>);
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let gltf = asset_server.load("Triball-v1.glb");
+    let gltf = asset_server.load("Triball-v5.glb");
     commands.insert_resource(MyAssetPack(gltf));
 }
 
@@ -22,10 +22,8 @@ pub fn spawn_objects(
     assets_gltf: Res<Assets<Gltf>>,
 ) {
     let object_debug_color = Color::hex("#44b748").unwrap();
-    // let object_debug_color = Color::rgba(0.0, 0.0, 0.0, 0.0);
-    // let object_size = 2.0;
-    let object_size = 7.0;
-    if keyboard_input.pressed(KeyCode::O) {
+    let object_size = 3.0;
+    if keyboard_input.just_pressed(KeyCode::O) {
         if let Some(gltf) = assets_gltf.get(&my.0) {
             commands
                 .spawn((
@@ -36,7 +34,6 @@ pub fn spawn_objects(
                         linvel: Vec3::new(1.0, 1.0, 1.0),
                         angvel: Vec3::new(0.0, 0.0, 0.0),
                     },
-                    // Collider::cuboid(object_size, 0.7 * object_size, 2.6 * object_size),
                     Collider::ball(object_size),
                     ColliderDebugColor(object_debug_color.into()),
                     ToggleVisibility {},
