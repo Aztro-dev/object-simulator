@@ -1,4 +1,5 @@
 use crate::ToggleVisibility;
+use crate::ToggleVisibilityRes;
 use bevy::gltf::Gltf;
 use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
@@ -19,6 +20,7 @@ pub fn spawn_objects(
     // mut meshes: ResMut<Assets<Mesh>>,
     // mut materials: ResMut<Assets<StandardMaterial>>,
     my: Res<MyAssetPack>,
+    toggle_visibility: Res<ToggleVisibilityRes>,
     assets_gltf: Res<Assets<Gltf>>,
 ) {
     let object_debug_color = Color::hex("#44b748").unwrap();
@@ -40,6 +42,11 @@ pub fn spawn_objects(
                 ))
                 .insert(SceneBundle {
                     scene: gltf.scenes[0].clone(),
+                    visibility: if toggle_visibility.0 {
+                        Visibility::Visible
+                    } else {
+                        Visibility::Hidden
+                    },
                     ..default()
                 });
         }

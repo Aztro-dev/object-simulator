@@ -5,13 +5,16 @@ use bevy_rapier3d::prelude::*;
 
 mod object;
 mod ui;
+mod visibility;
 
 use object::ObjectPlugin;
 use ui::UiPlugin;
+use visibility::*;
 
 fn main() {
     App::new()
         .insert_resource(ClearColor(Color::hex("333333").unwrap()))
+        .insert_resource(ToggleVisibilityRes(true))
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 title: "Object Test".into(),
@@ -28,7 +31,7 @@ fn main() {
         .add_plugin(UiPlugin)
         .insert_resource(MovementSettings {
             sensitivity: 0.00020, // default: 0.00012
-            speed: 16.0,         // default: 12.0
+            speed: 16.0,          // default: 12.0
         })
         .insert_resource(KeyBindings {
             move_ascend: KeyCode::E,
@@ -47,24 +50,6 @@ pub fn create_light(mut commands: Commands) {
         color: Color::WHITE,
         brightness: 1.0,
     });
-}
-
-#[derive(Component)]
-pub struct ToggleVisibility {}
-
-pub fn toggle_visibility(
-    keyboard: Res<Input<KeyCode>>,
-    mut pbr_query: Query<&mut Visibility, With<ToggleVisibility>>,
-) {
-    if keyboard.just_pressed(KeyCode::P) {
-        for mut visibility in pbr_query.iter_mut() {
-            if *visibility == Visibility::Hidden {
-                *visibility = Visibility::Visible;
-            } else {
-                *visibility = Visibility::Hidden;
-            }
-        }
-    }
 }
 
 pub fn spawn_field(
