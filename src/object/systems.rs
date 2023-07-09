@@ -23,8 +23,8 @@ pub fn spawn_objects(
 ) {
     let object_debug_color = Color::hex("#44b748").unwrap();
     // let object_debug_color = Color::rgba(0.0, 0.0, 0.0, 0.0);
-    let object_size = 2.0;
-    // let object_size = 7.0;
+    // let object_size = 2.0;
+    let object_size = 7.0;
     if keyboard_input.pressed(KeyCode::O) {
         if let Some(gltf) = assets_gltf.get(&my.0) {
             commands
@@ -36,8 +36,8 @@ pub fn spawn_objects(
                         linvel: Vec3::new(1.0, 1.0, 1.0),
                         angvel: Vec3::new(0.0, 0.0, 0.0),
                     },
-                    Collider::cuboid(object_size, 0.7 * object_size, 2.6 * object_size),
-                    // Collider::ball(object_size),
+                    // Collider::cuboid(object_size, 0.7 * object_size, 2.6 * object_size),
+                    Collider::ball(object_size),
                     ColliderDebugColor(object_debug_color.into()),
                     ToggleVisibility {},
                 ))
