@@ -72,7 +72,7 @@ pub fn spawn_field(
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    let size = 64.0;
+    let size = 1024.0;
     commands
         .spawn(PbrBundle {
             mesh: meshes.add(shape::Box::new(2.0 * size, 0.125 * size, 2.0 * size).into()),
