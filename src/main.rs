@@ -18,8 +18,9 @@ fn main() {
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 title: "Object Test".into(),
-                fit_canvas_to_parent: true,
-                present_mode: PresentMode::AutoNoVsync,
+                decorations: true,
+                resizable: true,
+                mode: WindowMode::BorderlessFullscreen,
                 ..default()
             }),
             ..default()
@@ -38,25 +39,18 @@ fn main() {
             move_descend: KeyCode::Q,
             ..Default::default()
         })
-        .add_startup_system(create_light)
-        .add_startup_system(spawn_field)
+        .add_startup_system(setup)
         .add_system(toggle_visibility)
         .add_system(close_on_esc)
         .run();
 }
 
-pub fn create_light(mut commands: Commands) {
-    commands.insert_resource(AmbientLight {
-        color: Color::WHITE,
-        brightness: 1.0,
-    });
-}
-
-pub fn spawn_field(
+pub fn setup(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
+    // Spawn the platform
     let size = 16.0;
     commands
         .spawn(PbrBundle {
@@ -70,4 +64,10 @@ pub fn spawn_field(
             Collider::cuboid(size, 0.0625 * size, size),
             ToggleVisibility {},
         ));
+
+    // Create the light
+    commands.insert_resource(AmbientLight {
+        color: Color::WHITE,
+        brightness: 2.0,
+    });
 }
