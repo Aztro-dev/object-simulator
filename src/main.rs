@@ -3,10 +3,12 @@ use bevy::window::*;
 use bevy_flycam::prelude::*;
 use bevy_rapier3d::prelude::*;
 
+mod light;
 mod object;
 mod ui;
 mod visibility;
 
+use light::spawn_light;
 use object::ObjectPlugin;
 use ui::UiPlugin;
 use visibility::*;
@@ -40,6 +42,7 @@ fn main() {
             ..Default::default()
         })
         .add_startup_system(setup)
+        .add_startup_system(spawn_light)
         .add_system(toggle_visibility)
         .add_system(close_on_esc)
         .run();
@@ -64,10 +67,4 @@ pub fn setup(
             Collider::cuboid(size, 0.0625 * size, size),
             ToggleVisibility {},
         ));
-
-    // Create the light
-    commands.insert_resource(AmbientLight {
-        color: Color::WHITE,
-        brightness: 2.0,
-    });
 }
