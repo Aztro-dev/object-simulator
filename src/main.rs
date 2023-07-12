@@ -22,7 +22,7 @@ fn main() {
                 title: "Object Test".into(),
                 decorations: true,
                 resizable: true,
-                mode: WindowMode::BorderlessFullscreen,
+                mode: WindowMode::Fullscreen,
                 ..default()
             }),
             ..default()
