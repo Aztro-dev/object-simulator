@@ -7,13 +7,13 @@ use bevy_rapier3d::prelude::*;
 mod field;
 mod light;
 mod object;
-mod ui;
+// mod ui;
 mod visibility;
 
 use field::FieldPlugin;
 use light::spawn_light;
 use object::ObjectPlugin;
-use ui::UiPlugin;
+// use ui::UiPlugin;
 use visibility::*;
 
 fn main() {
@@ -35,7 +35,7 @@ fn main() {
         .add_plugin(PlayerPlugin)
         .add_plugin(ObjectPlugin)
         .add_plugin(FieldPlugin)
-        .add_plugin(UiPlugin)
+        // .add_plugin(UiPlugin)
         .insert_resource(MovementSettings {
             sensitivity: 0.00020, // default: 0.00012
             speed: 16.0,          // default: 12.0
