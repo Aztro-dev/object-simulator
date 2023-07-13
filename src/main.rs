@@ -9,7 +9,7 @@ mod object;
 mod ui;
 mod visibility;
 
-use field::setup_field;
+use field::FieldPlugin;
 use light::spawn_light;
 use object::ObjectPlugin;
 use ui::UiPlugin;
@@ -33,6 +33,7 @@ fn main() {
         .add_plugin(RapierDebugRenderPlugin::default())
         .add_plugin(PlayerPlugin)
         .add_plugin(ObjectPlugin)
+        .add_plugin(FieldPlugin)
         .add_plugin(UiPlugin)
         .insert_resource(MovementSettings {
             sensitivity: 0.00020, // default: 0.00012
@@ -43,7 +44,6 @@ fn main() {
             move_descend: KeyCode::Q,
             ..Default::default()
         })
-        .add_startup_system(setup_field)
         .add_startup_system(spawn_light)
         .add_system(toggle_visibility)
         .add_system(close_on_esc)
