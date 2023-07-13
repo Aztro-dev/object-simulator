@@ -1,3 +1,4 @@
+use bevy::app::CoreSet::Update;
 use bevy::prelude::*;
 use bevy::window::*;
 use bevy_flycam::prelude::*;
@@ -45,7 +46,6 @@ fn main() {
             ..Default::default()
         })
         .add_startup_system(spawn_light)
-        .add_system(toggle_visibility)
-        .add_system(close_on_esc)
+        .add_systems(Update, (toggle_visibility, close_on_esc))
         .run();
 }
