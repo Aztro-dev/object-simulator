@@ -17,8 +17,6 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 pub fn spawn_objects(
     mut commands: Commands,
     keyboard_input: Res<Input<KeyCode>>,
-    // mut meshes: ResMut<Assets<Mesh>>,
-    // mut materials: ResMut<Assets<StandardMaterial>>,
     my: Res<MyAssetPack>,
     toggle_visibility: Res<ToggleVisibilityRes>,
     assets_gltf: Res<Assets<Gltf>>,
@@ -47,6 +45,7 @@ pub fn spawn_objects(
                     } else {
                         Visibility::Hidden
                     },
+                    transform: Transform::from_scale(Vec3::splat(3.0 / 7.0)),
                     ..default()
                 });
         }
