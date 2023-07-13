@@ -7,17 +7,17 @@ use bevy_rapier3d::prelude::*;
 const GRAVITY: f32 = 8.0;
 
 #[derive(Resource)]
-pub struct MyAssetPack(Handle<Gltf>);
+pub struct ObjectAssetPack(Handle<Gltf>);
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     let gltf = asset_server.load("Triball-v5.glb");
-    commands.insert_resource(MyAssetPack(gltf));
+    commands.insert_resource(ObjectAssetPack(gltf));
 }
 
 pub fn spawn_objects(
     mut commands: Commands,
     keyboard_input: Res<Input<KeyCode>>,
-    my: Res<MyAssetPack>,
+    my: Res<ObjectAssetPack>,
     toggle_visibility: Res<ToggleVisibilityRes>,
     assets_gltf: Res<Assets<Gltf>>,
 ) {
