@@ -14,6 +14,8 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.insert_resource(ObjectAssetPack(gltf));
 }
 
+const OBJECT_SIZE: f32 = 3.0;
+const OBJECT_SPAWN_HEIGHT: f32 = 4.0;
 pub fn spawn_objects(
     mut commands: Commands,
     keyboard_input: Res<Input<KeyCode>>,
@@ -22,19 +24,18 @@ pub fn spawn_objects(
     assets_gltf: Res<Assets<Gltf>>,
 ) {
     let object_debug_color = Color::hex("#44b748").unwrap();
-    let object_size = 3.0;
     if keyboard_input.just_pressed(KeyCode::O) {
         if let Some(gltf) = assets_gltf.get(&my.0) {
             commands
                 .spawn((
                     RigidBody::Dynamic,
-                    TransformBundle::from(Transform::from_xyz(0.0, 0.0, 0.0)),
+                    TransformBundle::from(Transform::from_xyz(0.0, OBJECT_SPAWN_HEIGHT, 0.0)),
                     GravityScale(GRAVITY),
                     Velocity {
                         linvel: Vec3::new(1.0, 1.0, 1.0),
                         angvel: Vec3::new(0.0, 0.0, 0.0),
                     },
-                    Collider::ball(object_size),
+                    Collider::ball(OBJECT_SIZE),
                     ColliderDebugColor(object_debug_color.into()),
                     ToggleVisibility {},
                 ))
