@@ -1,6 +1,5 @@
 use crate::ToggleVisibility;
 use crate::ToggleVisibilityRes;
-use bevy::gltf::Gltf;
 use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
 
