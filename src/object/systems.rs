@@ -24,7 +24,8 @@ pub fn spawn_objects(
     assets_gltf: Res<Assets<Gltf>>,
 ) {
     let object_debug_color = Color::hex("#44b748").unwrap();
-    if keyboard_input.just_pressed(KeyCode::O) {
+    // if keyboard_input.just_pressed(KeyCode::O) {
+    if keyboard_input.pressed(KeyCode::O) {
         if let Some(gltf) = assets_gltf.get(&my.0) {
             commands
                 .spawn((
