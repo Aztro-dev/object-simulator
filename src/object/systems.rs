@@ -24,7 +24,7 @@ pub fn spawn_objects(
     assets_gltf: Res<Assets<Gltf>>,
 ) {
     let object_debug_color = Color::hex("#44b748").unwrap();
-    if keyboard_input.just_pressed(KeyCode::O) {
+    if keyboard_input.pressed(KeyCode::O) {
         if let Some(gltf) = assets_gltf.get(&my.0) {
             commands
                 .spawn((
@@ -32,7 +32,7 @@ pub fn spawn_objects(
                     TransformBundle::from(Transform::from_xyz(0.0, OBJECT_SPAWN_HEIGHT, 0.0)),
                     GravityScale(GRAVITY),
                     Velocity {
-                        linvel: Vec3::new(1.0, 1.0, 1.0),
+                        linvel: Vec3::new(1.0, 1.0, 1.0).normalize(),
                         angvel: Vec3::new(0.0, 0.0, 0.0),
                     },
                     Collider::ball(OBJECT_SIZE),
