@@ -23,7 +23,7 @@ pub fn spawn_field(
     commands
         .spawn((
             RigidBody::Fixed,
-            TransformBundle::from(Transform::from_xyz(0.0, -2.0, 0.0)),
+            TransformBundle::from(Transform::from_xyz(0.0, 0.0, 0.0)),
             Collider::cuboid(object_size, 0.5, object_size),
             ColliderDebugColor(object_debug_color.into()),
             ToggleVisibility {},
@@ -35,7 +35,11 @@ pub fn spawn_field(
             } else {
                 Visibility::Hidden
             },
-            transform: Transform::from_scale(Vec3::splat(3.0 / 7.0)),
+            transform: Transform {
+                translation: Vec3::new(0.0, -16.0, 0.0),
+                scale: Vec3::splat(3.0 / 7.0),
+                ..default()
+            },
             ..default()
         });
 }
