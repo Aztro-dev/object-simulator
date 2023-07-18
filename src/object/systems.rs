@@ -10,7 +10,7 @@ const GRAVITY: f32 = 8.0;
 pub struct ObjectAssetPack(Handle<Gltf>);
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let gltf = asset_server.load("Triball-v5.glb");
+    let gltf = asset_server.load("TriballLowPolyV-2.glb");
     commands.insert_resource(ObjectAssetPack(gltf));
 }
 

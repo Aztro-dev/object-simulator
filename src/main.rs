@@ -1,4 +1,4 @@
-// use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
+use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 use bevy::prelude::*;
 use bevy::window::*;
 use bevy_flycam::prelude::*;
@@ -35,8 +35,8 @@ fn main() {
         .add_plugin(PlayerPlugin)
         .add_plugin(ObjectPlugin)
         .add_plugin(FieldPlugin)
-        // .add_plugin(LogDiagnosticsPlugin::default())
-        // .add_plugin(FrameTimeDiagnosticsPlugin::default())
+        .add_plugin(LogDiagnosticsPlugin::default())
+        .add_plugin(FrameTimeDiagnosticsPlugin::default())
         .add_plugin(UiPlugin)
         .insert_resource(MovementSettings {
             sensitivity: 0.00020, // default: 0.00012
