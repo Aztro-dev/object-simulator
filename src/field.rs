@@ -80,11 +80,13 @@ fn match_load_hitbox(
     x: f32,
     z: f32,
 ) -> (RigidBody, TransformBundle, Collider, ColliderDebugColor) {
+    let bruh = Quat::from_xyzw(0.5, -0.5, 0.5, 0.5);
+
     return (
         RigidBody::Fixed,
         TransformBundle::from(Transform {
             translation: Vec3::new(x, FIELD_HEIGHT + MATCH_LOAD_HEIGHT, z),
-            rotation: Quat::from_rotation_z(angle),
+            rotation: bruh, //Quat::from_rotation_z(angle),
             ..default()
         }),
         Collider::cylinder(MATCH_LOAD_HEIGHT / 2.0, MATCH_LOAD_RADIUS),
