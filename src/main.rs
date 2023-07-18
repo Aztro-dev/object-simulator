@@ -25,7 +25,7 @@ fn main() {
                 title: "Object Test".into(),
                 decorations: true,
                 resizable: true,
-                mode: WindowMode::Fullscreen,
+                mode: WindowMode::Windowed,
                 ..default()
             }),
             ..default()
