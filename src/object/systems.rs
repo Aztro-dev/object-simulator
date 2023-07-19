@@ -14,7 +14,8 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.insert_resource(ObjectAssetPack(gltf));
 }
 
-const OBJECT_SIZE: f32 = 3.0;
+const OBJECT_MODEL_SCALE: f32 = 16.0; // Was 3.0 / 7.0
+const OBJECT_SIZE: f32 = 2.0 / (OBJECT_MODEL_SCALE * (3.0 / 7.0)); // Was 3.0
 const OBJECT_SPAWN_HEIGHT: f32 = 4.0;
 pub fn spawn_objects(
     mut commands: Commands,
@@ -47,7 +48,7 @@ pub fn spawn_objects(
                     } else {
                         Visibility::Hidden
                     },
-                    transform: Transform::from_scale(Vec3::splat(3.0 / 7.0)),
+                    transform: Transform::from_scale(Vec3::splat(OBJECT_MODEL_SCALE)),
                     ..default()
                 });
         }
