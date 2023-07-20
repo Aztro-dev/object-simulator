@@ -23,11 +23,12 @@ fn main() {
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 title: "Object Test".into(),
-                resolution: (1920.0, 1080.0).into(),
-                position: WindowPosition::At(IVec2::new(0, 0)),
+                // resolution: (1920.0, 1080.0).into(),
+                // position: WindowPosition::At(IVec2::new(0, 0)),
                 decorations: true,
                 resizable: true,
-                mode: WindowMode::Windowed,
+                // mode: WindowMode::Windowed,
+                mode: WindowMode::Fullscreen,
                 ..default()
             }),
             ..default()

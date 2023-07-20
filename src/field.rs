@@ -4,6 +4,8 @@ use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
 use std::f32::consts::PI;
 
+const INCH: f32 = 15.0;
+
 pub struct FieldPlugin;
 
 impl Plugin for FieldPlugin {
@@ -97,6 +99,7 @@ fn match_load_hitbox(
 const WALL_SIZE: f32 = 6.0;
 const FIELD_DEBUG_COLOR: Color = Color::rgb(0.0, 0.0, 0.0);
 pub fn spawn_hitboxes(mut commands: Commands) {
+    println!("INCH: {}", INCH);
     // Walls
     commands.spawn(wall_hitbox(1.0, 0.0, false));
     commands.spawn(wall_hitbox(-1.0, 0.0, false));
