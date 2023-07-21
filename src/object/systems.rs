@@ -10,12 +10,12 @@ const GRAVITY: f32 = 8.0;
 pub struct ObjectAssetPack(Handle<Gltf>);
 
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
-    let gltf = asset_server.load("TriballCustom-v2.glb");
+    let gltf = asset_server.load("TriballCustom-V3.glb");
     commands.insert_resource(ObjectAssetPack(gltf));
 }
 
-const OBJECT_MODEL_SCALE: f32 = 16.0; // Was 3.0 / 7.0
-const OBJECT_SIZE: f32 = 2.0 / (OBJECT_MODEL_SCALE * (3.0 / 7.0)); // Was 3.0
+const OBJECT_MODEL_SCALE: f32 = 1.0 / 32.0; // Was 3.0 / 7.0
+const OBJECT_SIZE: f32 = 2.5 / OBJECT_MODEL_SCALE; // Was 3.0
 const OBJECT_SPAWN_HEIGHT: f32 = 4.0;
 pub fn spawn_objects(
     mut commands: Commands,
@@ -25,8 +25,8 @@ pub fn spawn_objects(
     assets_gltf: Res<Assets<Gltf>>,
 ) {
     let object_debug_color = Color::hex("#44b748").unwrap();
-    // if keyboard_input.just_pressed(KeyCode::O) {
-    if keyboard_input.pressed(KeyCode::O) {
+    if keyboard_input.just_pressed(KeyCode::O) {
+        // if keyboard_input.pressed(KeyCode::O) {
         if let Some(gltf) = assets_gltf.get(&my.0) {
             commands
                 .spawn((
