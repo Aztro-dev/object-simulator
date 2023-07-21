@@ -73,9 +73,9 @@ fn wall_hitbox(
 }
 
 const BARRIER_HEIGHT: f32 = 0.5;
-const BARRIER_SIZE: f32 = 50.0;
+const BIG_BARRIER_SIZE: f32 = 50.0;
 const BARRIER_RADIUS: f32 = 1.2;
-fn barrier_hitbox() -> (RigidBody, TransformBundle, Collider, ColliderDebugColor) {
+fn big_barrier_hitbox() -> (RigidBody, TransformBundle, Collider, ColliderDebugColor) {
     return (
         RigidBody::Fixed,
         TransformBundle::from(Transform {
@@ -83,7 +83,21 @@ fn barrier_hitbox() -> (RigidBody, TransformBundle, Collider, ColliderDebugColor
             rotation: Quat::from_rotation_x(PI / 2.0),
             ..default()
         }),
-        Collider::cylinder(BARRIER_SIZE, BARRIER_RADIUS),
+        Collider::cylinder(BIG_BARRIER_SIZE, BARRIER_RADIUS),
+        ColliderDebugColor(FIELD_DEBUG_COLOR.into()),
+    );
+}
+
+const SMALL_BARRIER_SIZE: f32 = BIG_BARRIER_SIZE / 2.0;
+fn small_barrier_hitbox(z: f32) -> (RigidBody, TransformBundle, Collider, ColliderDebugColor) {
+    return (
+        RigidBody::Fixed,
+        TransformBundle::from(Transform {
+            translation: Vec3::new(0.0, FIELD_HEIGHT + BARRIER_RADIUS + BARRIER_HEIGHT, z),
+            rotation: Quat::from_rotation_z(PI / 2.0),
+            ..default()
+        }),
+        Collider::cylinder(SMALL_BARRIER_SIZE, BARRIER_RADIUS),
         ColliderDebugColor(FIELD_DEBUG_COLOR.into()),
     );
 }
@@ -97,5 +111,7 @@ pub fn spawn_hitboxes(mut commands: Commands) {
     commands.spawn(wall_hitbox(0.0, 1.0, true));
     commands.spawn(wall_hitbox(0.0, -1.0, true));
     // Barriers
-    commands.spawn(barrier_hitbox());
+    commands.spawn(big_barrier_hitbox());
+    commands.spawn(small_barrier_hitbox(BIG_BARRIER_SIZE));
+    commands.spawn(small_barrier_hitbox(-BIG_BARRIER_SIZE));
 }
