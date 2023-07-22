@@ -73,7 +73,7 @@ fn wall_hitbox(
 }
 
 const BARRIER_HEIGHT: f32 = 0.5;
-const BIG_BARRIER_SIZE: f32 = 50.0;
+const BIG_BARRIER_SIZE: f32 = 51.5;
 const BARRIER_RADIUS: f32 = 1.2;
 fn big_barrier_hitbox() -> (RigidBody, TransformBundle, Collider, ColliderDebugColor) {
     return (
@@ -102,6 +102,41 @@ fn small_barrier_hitbox(z: f32) -> (RigidBody, TransformBundle, Collider, Collid
     );
 }
 
+const CLIMBING_POLE_SIZE: f32 = BIG_BARRIER_SIZE / 3.2;
+const CLIMBING_POLE_RADIUS: f32 = 1.19;
+fn climbing_pole_hitbox(z: f32) -> (RigidBody, TransformBundle, Collider, ColliderDebugColor) {
+    return (
+        RigidBody::Fixed,
+        TransformBundle::from(Transform {
+            translation: Vec3::new(0.0, FIELD_HEIGHT + BARRIER_HEIGHT + CLIMBING_POLE_SIZE, z),
+            rotation: Quat::from_rotation_y(PI / 2.0),
+            ..default()
+        }),
+        Collider::cylinder(CLIMBING_POLE_SIZE, CLIMBING_POLE_RADIUS),
+        ColliderDebugColor(FIELD_DEBUG_COLOR.into()),
+    );
+}
+
+const HANGING_POLE_SIZE: f32 = BIG_BARRIER_SIZE / 4.0;
+const HANGING_POLE_RADIUS: f32 = 1.19;
+const HANGING_POLE_HEIGHT: f32 = 12.0;
+fn hanging_pole_hitbox(z: f32) -> (RigidBody, TransformBundle, Collider, ColliderDebugColor) {
+    return (
+        RigidBody::Fixed,
+        TransformBundle::from(Transform {
+            translation: Vec3::new(
+                0.0,
+                FIELD_HEIGHT + BARRIER_HEIGHT + HANGING_POLE_RADIUS + HANGING_POLE_HEIGHT,
+                z,
+            ),
+            rotation: Quat::from_rotation_x(PI / 2.0),
+            ..default()
+        }),
+        Collider::cylinder(HANGING_POLE_SIZE, HANGING_POLE_RADIUS),
+        ColliderDebugColor(FIELD_DEBUG_COLOR.into()),
+    );
+}
+
 const WALL_SIZE: f32 = 6.0;
 const FIELD_DEBUG_COLOR: Color = Color::rgb(0.0, 0.0, 0.0);
 pub fn spawn_hitboxes(mut commands: Commands) {
@@ -114,4 +149,10 @@ pub fn spawn_hitboxes(mut commands: Commands) {
     commands.spawn(big_barrier_hitbox());
     commands.spawn(small_barrier_hitbox(BIG_BARRIER_SIZE));
     commands.spawn(small_barrier_hitbox(-BIG_BARRIER_SIZE));
+    // Climbing Poles
+    commands.spawn(climbing_pole_hitbox(BIG_BARRIER_SIZE));
+    commands.spawn(climbing_pole_hitbox(-BIG_BARRIER_SIZE));
+    // Hanging Poles
+    commands.spawn(hanging_pole_hitbox(BIG_BARRIER_SIZE + HANGING_POLE_SIZE));
+    commands.spawn(hanging_pole_hitbox(-BIG_BARRIER_SIZE - HANGING_POLE_SIZE));
 }
