@@ -3,10 +3,6 @@ use bevy::input::mouse::MouseMotion;
 use bevy::prelude::*;
 use bevy::window::{CursorGrabMode, PrimaryWindow};
 
-pub mod prelude {
-    pub use crate::*;
-}
-
 /// Keeps track of mouse motion events, pitch, and yaw
 #[derive(Resource, Default)]
 struct InputState {
@@ -38,6 +34,7 @@ pub struct KeyBindings {
     pub move_right: KeyCode,
     pub move_ascend: KeyCode,
     pub move_descend: KeyCode,
+    pub move_slow: KeyCode,
     pub toggle_grab_cursor: KeyCode,
 }
 
@@ -49,7 +46,8 @@ impl Default for KeyBindings {
             move_left: KeyCode::A,
             move_right: KeyCode::D,
             move_ascend: KeyCode::Space,
-            move_descend: KeyCode::ControlLeft,
+            move_descend: KeyCode::LControl,
+            move_slow: KeyCode::LAlt,
             toggle_grab_cursor: KeyCode::Back,
         }
     }
@@ -133,7 +131,11 @@ fn player_move(
 
                 velocity = velocity.normalize_or_zero();
 
-                transform.translation += velocity * time.delta_seconds() * settings.speed
+                if keys.pressed(key_bindings.move_slow) {
+                    transform.translation += velocity * time.delta_seconds() * settings.speed * 0.8
+                } else {
+                    transform.translation += velocity * time.delta_seconds() * settings.speed
+                }
             }
         }
     } else {

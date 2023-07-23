@@ -1,17 +1,19 @@
 use bevy::diagnostic::{FrameTimeDiagnosticsPlugin, LogDiagnosticsPlugin};
 use bevy::prelude::*;
 use bevy::window::*;
-use bevy_flycam::prelude::*;
+// use bevy_flycam::prelude::*;
 use bevy_rapier3d::prelude::*;
 
 mod field;
 mod light;
+mod movement;
 mod object;
 mod ui;
 mod visibility;
 
 use field::FieldPlugin;
 use light::spawn_light;
+use movement::PlayerPlugin;
 use object::ObjectPlugin;
 use ui::UiPlugin;
 use visibility::*;
@@ -36,20 +38,15 @@ fn main() {
         .add_plugin(RapierPhysicsPlugin::<NoUserData>::default())
         .add_plugin(RapierDebugRenderPlugin::default())
         .add_plugin(PlayerPlugin)
+        .insert_resource(movement::MovementSettings {
+            sensitivity: 0.00020, // default: 0.00012
+            speed: 64.0,          // default: 12.0
+        })
         .add_plugin(ObjectPlugin)
         .add_plugin(FieldPlugin)
         .add_plugin(LogDiagnosticsPlugin::default())
         .add_plugin(FrameTimeDiagnosticsPlugin::default())
         .add_plugin(UiPlugin)
-        .insert_resource(MovementSettings {
-            sensitivity: 0.00020, // default: 0.00012
-            speed: 64.0,          // default: 12.0
-        })
-        .insert_resource(KeyBindings {
-            move_ascend: KeyCode::E,
-            move_descend: KeyCode::Q,
-            ..Default::default()
-        })
         .add_startup_system(spawn_light)
         .add_systems((toggle_visibility, close_on_esc))
         .run();
