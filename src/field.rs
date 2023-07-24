@@ -137,8 +137,26 @@ fn hanging_pole_hitbox(z: f32) -> (RigidBody, TransformBundle, Collider, Collide
     );
 }
 
+const GOAL_POST_FOOT_RADIUS: f32 = 4.2;
+const GOAL_POST_FOOT_SIZE: f32 = 2.0;
+fn goal_post_foot_hitbox(
+    x: f32,
+    z: f32,
+) -> (RigidBody, TransformBundle, Collider, ColliderDebugColor) {
+    return (
+        RigidBody::Fixed,
+        TransformBundle::from(Transform {
+            translation: Vec3::new(x, FIELD_HEIGHT + GOAL_POST_FOOT_SIZE, z),
+            ..default()
+        }),
+        Collider::cone(GOAL_POST_FOOT_SIZE, GOAL_POST_FOOT_RADIUS),
+        ColliderDebugColor(FIELD_DEBUG_COLOR.into()),
+    );
+}
+
 const WALL_SIZE: f32 = 6.0;
 const FIELD_DEBUG_COLOR: Color = Color::rgb(0.0, 0.0, 0.0);
+const GOAL_POST_FOOT_DISTANCE: f32 = 25.6;
 pub fn spawn_hitboxes(mut commands: Commands) {
     // Walls
     commands.spawn(wall_hitbox(1.0, 0.0, false));
@@ -155,4 +173,21 @@ pub fn spawn_hitboxes(mut commands: Commands) {
     // Hanging Poles
     commands.spawn(hanging_pole_hitbox(BIG_BARRIER_SIZE + HANGING_POLE_SIZE));
     commands.spawn(hanging_pole_hitbox(-BIG_BARRIER_SIZE - HANGING_POLE_SIZE));
+    // Goal posts
+    commands.spawn(goal_post_foot_hitbox(
+        FIELD_SIZE / 3.5,
+        GOAL_POST_FOOT_DISTANCE,
+    ));
+    commands.spawn(goal_post_foot_hitbox(
+        FIELD_SIZE / 3.5,
+        -GOAL_POST_FOOT_DISTANCE,
+    ));
+    commands.spawn(goal_post_foot_hitbox(
+        -FIELD_SIZE / 3.5,
+        GOAL_POST_FOOT_DISTANCE,
+    ));
+    commands.spawn(goal_post_foot_hitbox(
+        -FIELD_SIZE / 3.5,
+        -GOAL_POST_FOOT_DISTANCE,
+    ));
 }
