@@ -10,9 +10,14 @@ const GRAVITY: f32 = 8.0;
 #[derive(Resource)]
 pub struct ObjectAssetPack(Handle<Gltf>);
 
+#[derive(Resource)]
+pub struct LowPolyPack(Handle<Gltf>);
+
 pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     let gltf = asset_server.load("TriballCustom-V3.glb");
+    let low_poly = asset_server.load("TriballLowPoly.glb");
     commands.insert_resource(ObjectAssetPack(gltf));
+    commands.insert_resource(LowPolyPack(low_poly));
 }
 
 const OBJECT_MODEL_SCALE: f32 = 1.0 / 32.0; // Was 3.0 / 7.0
@@ -22,6 +27,7 @@ pub fn spawn_objects(
     mut commands: Commands,
     keyboard_input: Res<Input<KeyCode>>,
     my: Res<ObjectAssetPack>,
+    low_poly: Res<LowPolyPack>,
     toggle_visibility: Res<ToggleVisibilityRes>,
     assets_gltf: Res<Assets<Gltf>>,
     assets_gltfmesh: Res<Assets<GltfMesh>>,
@@ -31,7 +37,9 @@ pub fn spawn_objects(
     if keyboard_input.just_pressed(KeyCode::O) {
         // if keyboard_input.pressed(KeyCode::O) {
         if let Some(gltf) = assets_gltf.get(&my.0) {
-            if let Some(gltf_mesh) = assets_gltfmesh.get(&gltf.meshes[0]) {
+            if let Some(triball_low_poly) =
+                assets_gltfmesh.get(&(assets_gltf.get(&low_poly.0).unwrap()).meshes[0])
+            {
                 commands
                     .spawn(RigidBody::Dynamic)
                     .insert(TransformBundle::from(Transform::from_xyz(
@@ -46,7 +54,7 @@ pub fn spawn_objects(
                     })
                     .insert(
                         Collider::from_bevy_mesh(
-                            assets.get(&gltf_mesh.primitives[0].mesh).unwrap(),
+                            assets.get(&triball_low_poly.primitives[0].mesh).unwrap(),
                             &ComputedColliderShape::TriMesh,
                         )
                         .unwrap(),
@@ -76,7 +84,7 @@ pub fn spawn_objects(
                             angvel: Vec3::new(0.0, 0.0, 0.0),
                         },
                         Collider::from_bevy_mesh(
-                            assets.get(&gltf_mesh.primitives[0].mesh).unwrap(),
+                            assets.get(&triball_low_poly.primitives[0].mesh).unwrap(),
                             &ComputedColliderShape::TriMesh,
                         ),
                         ColliderDebugColor(object_debug_color.into()),
