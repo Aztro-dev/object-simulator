@@ -28,8 +28,8 @@ pub fn spawn_objects(
     assets: Res<Assets<Mesh>>,
 ) {
     let object_debug_color = Color::hex("#44b748").unwrap();
-    // if keyboard_input.just_pressed(KeyCode::O) {
-    if keyboard_input.pressed(KeyCode::O) {
+    if keyboard_input.just_pressed(KeyCode::O) {
+        // if keyboard_input.pressed(KeyCode::O) {
         if let Some(gltf) = assets_gltf.get(&my.0) {
             if let Some(gltf_mesh) = assets_gltfmesh.get(&gltf.meshes[0]) {
                 commands
@@ -41,8 +41,8 @@ pub fn spawn_objects(
                     )))
                     .insert(GravityScale(GRAVITY))
                     .insert(Velocity {
-                        linvel: Vec3::new(1.0, 1.0, 1.0).normalize(),
-                        angvel: Vec3::new(0.0, 0.0, 0.0),
+                        linvel: Vec3::new(10.0, 10.0, 10.0),
+                        angvel: Vec3::new(10.0, 0.0, 10.0),
                     })
                     .insert(
                         Collider::from_bevy_mesh(
