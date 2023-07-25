@@ -21,7 +21,7 @@ pub fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
 }
 
 const OBJECT_MODEL_SCALE: f32 = 1.0 / 32.0; // Was 3.0 / 7.0
-const OBJECT_SIZE: f32 = 2.5 / OBJECT_MODEL_SCALE; // Was 3.0
+                                            // const OBJECT_SIZE: f32 = 2.5 / OBJECT_MODEL_SCALE; // Was 3.0
 const OBJECT_SPAWN_HEIGHT: f32 = 4.0;
 pub fn spawn_objects(
     mut commands: Commands,
@@ -75,18 +75,3 @@ pub fn spawn_objects(
         }
     }
 }
-
-/*
-                        TransformBundle::from(Transform::from_xyz(0.0, OBJECT_SPAWN_HEIGHT, 0.0)),
-                        GravityScale(GRAVITY),
-                        Velocity {
-                            linvel: Vec3::new(1.0, 1.0, 1.0).normalize(),
-                            angvel: Vec3::new(0.0, 0.0, 0.0),
-                        },
-                        Collider::from_bevy_mesh(
-                            assets.get(&triball_low_poly.primitives[0].mesh).unwrap(),
-                            &ComputedColliderShape::TriMesh,
-                        ),
-                        ColliderDebugColor(object_debug_color.into()),
-                        ToggleVisibility {},
-*/

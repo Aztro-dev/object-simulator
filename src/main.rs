@@ -8,6 +8,7 @@ mod field;
 mod light;
 mod movement;
 mod object;
+mod robot;
 mod ui;
 mod visibility;
 
@@ -15,6 +16,7 @@ use field::FieldPlugin;
 use light::spawn_light;
 use movement::PlayerPlugin;
 use object::ObjectPlugin;
+use robot::RobotPlugin;
 use ui::UiPlugin;
 use visibility::*;
 
@@ -37,17 +39,26 @@ fn main() {
         }))
         .add_plugin(RapierPhysicsPlugin::<NoUserData>::default())
         .add_plugin(RapierDebugRenderPlugin::default())
-        .add_plugin(PlayerPlugin)
+        // .add_plugin(PlayerPlugin)
         .insert_resource(movement::MovementSettings {
             sensitivity: 0.00020, // default: 0.00012
             speed: 64.0,          // default: 12.0
         })
         .add_plugin(ObjectPlugin)
+        .add_plugin(RobotPlugin)
         .add_plugin(FieldPlugin)
         .add_plugin(LogDiagnosticsPlugin::default())
         .add_plugin(FrameTimeDiagnosticsPlugin::default())
         .add_plugin(UiPlugin)
         .add_startup_system(spawn_light)
+        .add_startup_system(spawn_camera)
         .add_systems((toggle_visibility, close_on_esc))
         .run();
+}
+
+fn spawn_camera(mut commands: Commands) {
+    commands.spawn(Camera3dBundle {
+        transform: Transform::from_xyz(-100.0, 30.0, 100.0).looking_at(Vec3::ZERO, Vec3::Y),
+        ..default()
+    });
 }
