@@ -40,28 +40,22 @@ pub fn spawn_objects(
             if let Some(triball_low_poly) =
                 assets_gltfmesh.get(&(assets_gltf.get(&low_poly.0).unwrap()).meshes[0])
             {
-                commands
-                    .spawn(RigidBody::Dynamic)
-                    .insert(TransformBundle::from(Transform::from_xyz(
-                        0.0,
-                        OBJECT_SPAWN_HEIGHT,
-                        0.0,
-                    )))
-                    .insert(GravityScale(GRAVITY))
-                    .insert(Velocity {
+                commands.spawn((
+                    RigidBody::Dynamic,
+                    TransformBundle::from(Transform::from_xyz(0.0, OBJECT_SPAWN_HEIGHT, 0.0)),
+                    GravityScale(GRAVITY),
+                    Velocity {
                         linvel: Vec3::new(10.0, 10.0, 10.0),
                         angvel: Vec3::new(10.0, 0.0, 10.0),
-                    })
-                    .insert(
-                        Collider::from_bevy_mesh(
-                            assets.get(&triball_low_poly.primitives[0].mesh).unwrap(),
-                            &ComputedColliderShape::TriMesh,
-                        )
-                        .unwrap(),
+                    },
+                    Collider::from_bevy_mesh(
+                        assets.get(&triball_low_poly.primitives[0].mesh).unwrap(),
+                        &ComputedColliderShape::TriMesh,
                     )
-                    .insert(ColliderDebugColor(object_debug_color.into()))
-                    .insert(ToggleVisibility {})
-                    .insert(SceneBundle {
+                    .unwrap(),
+                    ColliderDebugColor(object_debug_color.into()),
+                    ToggleVisibility {},
+                    SceneBundle {
                         scene: gltf.scenes[0].clone(),
                         visibility: if toggle_visibility.0 {
                             Visibility::Visible
@@ -70,7 +64,8 @@ pub fn spawn_objects(
                         },
                         transform: Transform::from_scale(Vec3::splat(OBJECT_MODEL_SCALE)),
                         ..default()
-                    });
+                    },
+                ));
             }
         }
     }

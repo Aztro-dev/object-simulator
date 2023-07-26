@@ -6,7 +6,7 @@ use bevy_rapier3d::prelude::*;
 
 mod field;
 mod light;
-mod movement;
+// mod movement;
 mod object;
 mod robot;
 mod ui;
@@ -14,7 +14,7 @@ mod visibility;
 
 use field::FieldPlugin;
 use light::spawn_light;
-use movement::PlayerPlugin;
+// use movement::PlayerPlugin;
 use object::ObjectPlugin;
 use robot::RobotPlugin;
 use ui::UiPlugin;
@@ -40,10 +40,10 @@ fn main() {
         .add_plugin(RapierPhysicsPlugin::<NoUserData>::default())
         .add_plugin(RapierDebugRenderPlugin::default())
         // .add_plugin(PlayerPlugin)
-        .insert_resource(movement::MovementSettings {
-            sensitivity: 0.00020, // default: 0.00012
-            speed: 64.0,          // default: 12.0
-        })
+        // .insert_resource(movement::MovementSettings {
+        //     sensitivity: 0.00020, // default: 0.00012
+        //     speed: 64.0,          // default: 12.0
+        // })
         .add_plugin(ObjectPlugin)
         .add_plugin(RobotPlugin)
         .add_plugin(FieldPlugin)
