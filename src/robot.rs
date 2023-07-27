@@ -67,7 +67,7 @@ const MAX_ROBOT_TURNING_SPEED: f32 = 8.0;
 
 fn handle_movement(
     keyboard_input: Res<Input<KeyCode>>,
-    mut robot_query: Query<(&mut Velocity, &Transform, &Robot)>,
+    mut robot_query: Query<(&mut Velocity, &Transform), With<Robot>>,
 ) {
     for (mut velocity, transform) in robot_query.iter_mut() {
         let curr_angle = transform.rotation.to_euler(EulerRot::XYZ).1;
@@ -78,7 +78,6 @@ fn handle_movement(
         } else if keyboard_input.pressed(KeyCode::D) && !keyboard_input.pressed(KeyCode::A) {
             velocity.angvel.y -= ROBOT_TURNING_SPEED;
             velocity.angvel.y = max(velocity.angvel.y, -MAX_ROBOT_TURNING_SPEED);
-            println!("{curr_angle}");
         }
         if keyboard_input.pressed(KeyCode::W) {
             velocity.linvel.x += ROBOT_SPEED * curr_angle.sin();

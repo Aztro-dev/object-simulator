@@ -7,6 +7,5 @@ edition = "2021"
 
 [dependencies]
 bevy = "0.10.1"
-bevy_flycam = "0.10.1"
 bevy_rapier3d = "0.21.0"
-belly = {git = "https://github.com/jkb0o/belly.git"}
+bevy_screen_diagnostics = "0.2.0"
