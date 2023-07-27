@@ -46,8 +46,8 @@ impl Default for KeyBindings {
             move_left: KeyCode::A,
             move_right: KeyCode::D,
             move_ascend: KeyCode::Space,
-            move_descend: KeyCode::LControl,
-            move_slow: KeyCode::LAlt,
+            move_descend: KeyCode::ControlLeft,
+            move_slow: KeyCode::AltLeft,
             toggle_grab_cursor: KeyCode::Back,
         }
     }
@@ -214,11 +214,8 @@ impl Plugin for PlayerPlugin {
         app.init_resource::<InputState>()
             .init_resource::<MovementSettings>()
             .init_resource::<KeyBindings>()
-            .add_system(setup_player.on_startup())
-            .add_system(initial_grab_cursor.on_startup())
-            .add_system(player_move)
-            .add_system(player_look)
-            .add_system(cursor_grab);
+            .add_systems(Startup, (setup_player, initial_grab_cursor))
+            .add_systems(Update, (player_move, player_look, cursor_grab));
     }
 }
 
@@ -229,10 +226,7 @@ impl Plugin for NoCameraPlayerPlugin {
         app.init_resource::<InputState>()
             .init_resource::<MovementSettings>()
             .init_resource::<KeyBindings>()
-            .add_system(initial_grab_cursor.on_startup())
-            .add_system(initial_grab_on_flycam_spawn.on_startup())
-            .add_system(player_move)
-            .add_system(player_look)
-            .add_system(cursor_grab);
+            .add_systems(Startup, (initial_grab_cursor, initial_grab_on_flycam_spawn))
+            .add_systems(Update, (player_move, player_look, cursor_grab));
     }
 }

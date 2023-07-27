@@ -8,7 +8,7 @@ pub struct FieldPlugin;
 
 impl Plugin for FieldPlugin {
     fn build(&self, app: &mut App) {
-        app.add_startup_systems((spawn_field, spawn_hitboxes));
+        app.add_systems(Startup, (spawn_field, spawn_hitboxes));
     }
 }
 

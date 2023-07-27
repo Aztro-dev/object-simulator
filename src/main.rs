@@ -34,18 +34,19 @@ fn main() {
             }),
             ..default()
         }))
-        .add_plugin(RapierPhysicsPlugin::<NoUserData>::default())
-        .add_plugin(RapierDebugRenderPlugin::default())
-        .add_plugin(ScreenDiagnosticsPlugin::default())
-        .add_plugin(ObjectPlugin)
-        .add_plugin(RobotPlugin)
-        .add_plugin(FieldPlugin)
-        .add_plugin(LogDiagnosticsPlugin::default())
-        .add_plugin(FrameTimeDiagnosticsPlugin::default())
-        .add_plugin(ScreenFrameDiagnosticsPlugin)
-        .add_startup_system(spawn_light)
-        .add_startup_system(spawn_camera)
-        .add_systems((toggle_visibility, close_on_esc))
+        .add_plugins((
+            RapierPhysicsPlugin::<NoUserData>::default(),
+            RapierDebugRenderPlugin::default(),
+            ScreenDiagnosticsPlugin::default(),
+            ObjectPlugin,
+            RobotPlugin,
+            FieldPlugin,
+            LogDiagnosticsPlugin::default(),
+            FrameTimeDiagnosticsPlugin::default(),
+            ScreenFrameDiagnosticsPlugin,
+        ))
+        .add_systems(Startup, (spawn_light, spawn_camera))
+        .add_systems(Update, (toggle_visibility, close_on_esc))
         .run();
 }
 

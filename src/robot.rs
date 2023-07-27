@@ -6,14 +6,13 @@ pub struct RobotPlugin;
 
 impl Plugin for RobotPlugin {
     fn build(&self, app: &mut App) {
-        app.add_startup_system(setup).add_system(handle_movement);
+        app.add_systems(Startup, setup)
+            .add_systems(Update, handle_movement);
     }
 }
 
 #[derive(Component)]
-struct Robot {
-    heading: f32, // This is in radians
-}
+struct Robot {}
 
 const GRAVITY: f32 = 50.0;
 const ROBOT_SIZE: f32 = 4.0;
@@ -32,7 +31,7 @@ fn setup(
             ToggleVisibility {},
             Collider::cuboid(ROBOT_SIZE, ROBOT_SIZE, ROBOT_SIZE),
             Velocity { ..default() },
-            Robot { heading: 0.0 },
+            Robot {},
             PbrBundle {
                 mesh: meshes.add(Mesh::from(shape::Cube {
                     size: ROBOT_SIZE * 2.0,
