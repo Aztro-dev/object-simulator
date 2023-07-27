@@ -11,7 +11,9 @@ impl Plugin for RobotPlugin {
 }
 
 #[derive(Component)]
-struct Robot {}
+struct Robot {
+    heading: f32, // This is in radians
+}
 
 const GRAVITY: f32 = 50.0;
 const ROBOT_SIZE: f32 = 4.0;
@@ -30,7 +32,7 @@ fn setup(
             ToggleVisibility {},
             Collider::cuboid(ROBOT_SIZE, ROBOT_SIZE, ROBOT_SIZE),
             Velocity { ..default() },
-            Robot {},
+            Robot { heading: 0.0 },
             PbrBundle {
                 mesh: meshes.add(Mesh::from(shape::Cube {
                     size: ROBOT_SIZE * 2.0,
@@ -65,7 +67,7 @@ const MAX_ROBOT_TURNING_SPEED: f32 = 8.0;
 
 fn handle_movement(
     keyboard_input: Res<Input<KeyCode>>,
-    mut robot_query: Query<(&mut Velocity, &Transform), With<Robot>>,
+    mut robot_query: Query<(&mut Velocity, &Transform, &Robot)>,
 ) {
     for (mut velocity, transform) in robot_query.iter_mut() {
         let curr_angle = transform.rotation.to_euler(EulerRot::XYZ).1;
