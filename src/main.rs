@@ -3,7 +3,9 @@ use bevy::prelude::*;
 use bevy::window::*;
 use bevy_rapier3d::prelude::*;
 use bevy_screen_diagnostics::{ScreenDiagnosticsPlugin, ScreenFrameDiagnosticsPlugin};
+// use bevy_third_person_camera::ThirdPersonCamera;
 
+mod bevy_third_person_camera;
 mod field;
 mod light;
 mod movement;
@@ -11,6 +13,7 @@ mod object;
 mod robot;
 mod visibility;
 
+use bevy_third_person_camera::ThirdPersonCamera;
 use field::FieldPlugin;
 use light::spawn_light;
 use object::ObjectPlugin;
@@ -51,8 +54,11 @@ fn main() {
 }
 
 fn spawn_camera(mut commands: Commands) {
-    commands.spawn(Camera3dBundle {
-        transform: Transform::from_xyz(-100.0, 30.0, 100.0).looking_at(Vec3::ZERO, Vec3::Y),
-        ..default()
-    });
+    commands.spawn((
+        Camera3dBundle::default(),
+        ThirdPersonCamera {
+            zoom_bounds: (20.0, 30.0),
+            ..default()
+        },
+    ));
 }

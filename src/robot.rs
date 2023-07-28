@@ -1,12 +1,16 @@
 use crate::ToggleVisibility;
 use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
+// use bevy_third_person_camera::*;
+
+use crate::bevy_third_person_camera::*;
 
 pub struct RobotPlugin;
 
 impl Plugin for RobotPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(Startup, setup)
+        app.add_plugins(ThirdPersonCameraPlugin)
+            .add_systems(Startup, setup)
             .add_systems(Update, handle_movement);
     }
 }
@@ -39,6 +43,7 @@ fn setup(
                 material: materials.add(Color::rgb(1.0, 1.0, 1.0).into()),
                 ..default()
             },
+            ThirdPersonCameraTarget,
         ))
         .insert(TransformBundle::from(Transform {
             translation: Vec3::new(10.0, -10.0, 0.0),
