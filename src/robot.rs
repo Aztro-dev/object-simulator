@@ -1,12 +1,18 @@
+use crate::maths::*;
 use crate::ToggleVisibility;
 use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
+// use bevy_third_person_camera::*;
+
+use crate::bevy_third_person_camera::*;
 
 pub struct RobotPlugin;
 
 impl Plugin for RobotPlugin {
     fn build(&self, app: &mut App) {
-        app.add_startup_system(setup).add_system(handle_movement);
+        app.add_plugins(ThirdPersonCameraPlugin)
+            .add_systems(Startup, setup)
+            .add_systems(Update, handle_movement);
     }
 }
 
@@ -38,6 +44,7 @@ fn setup(
                 material: materials.add(Color::rgb(1.0, 1.0, 1.0).into()),
                 ..default()
             },
+            ThirdPersonCameraTarget,
         ))
         .insert(TransformBundle::from(Transform {
             translation: Vec3::new(10.0, -10.0, 0.0),
@@ -68,7 +75,7 @@ fn handle_movement(
     mut robot_query: Query<(&mut Velocity, &Transform), With<Robot>>,
 ) {
     for (mut velocity, transform) in robot_query.iter_mut() {
-        let curr_angle = transform.rotation.to_euler(EulerRot::XYZ).1;
+        let curr_angle = quat_to_euler(transform.rotation).y;
 
         if keyboard_input.pressed(KeyCode::A) && !keyboard_input.pressed(KeyCode::D) {
             velocity.angvel.y += ROBOT_TURNING_SPEED;
@@ -76,7 +83,6 @@ fn handle_movement(
         } else if keyboard_input.pressed(KeyCode::D) && !keyboard_input.pressed(KeyCode::A) {
             velocity.angvel.y -= ROBOT_TURNING_SPEED;
             velocity.angvel.y = max(velocity.angvel.y, -MAX_ROBOT_TURNING_SPEED);
-            println!("{curr_angle}");
         }
         if keyboard_input.pressed(KeyCode::W) {
             velocity.linvel.x += ROBOT_SPEED * curr_angle.sin();
