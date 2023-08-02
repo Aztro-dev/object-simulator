@@ -52,19 +52,6 @@ fn setup(
         }));
 }
 
-fn max(num1: f32, num2: f32) -> f32 {
-    if num1 > num2 {
-        return num1;
-    }
-    return num2;
-}
-fn min(num1: f32, num2: f32) -> f32 {
-    if num1 < num2 {
-        return num1;
-    }
-    return num2;
-}
-
 const ROBOT_SPEED: f32 = 5.0;
 const MAX_ROBOT_SPEED: f32 = 50.0;
 const ROBOT_TURNING_SPEED: f32 = 1.8;
@@ -79,24 +66,24 @@ fn handle_movement(
 
         if keyboard_input.pressed(KeyCode::A) && !keyboard_input.pressed(KeyCode::D) {
             velocity.angvel.y += ROBOT_TURNING_SPEED;
-            velocity.angvel.y = min(velocity.angvel.y, MAX_ROBOT_TURNING_SPEED);
+            velocity.angvel.y = velocity.angvel.y.min(MAX_ROBOT_TURNING_SPEED);
         } else if keyboard_input.pressed(KeyCode::D) && !keyboard_input.pressed(KeyCode::A) {
             velocity.angvel.y -= ROBOT_TURNING_SPEED;
-            velocity.angvel.y = max(velocity.angvel.y, -MAX_ROBOT_TURNING_SPEED);
+            velocity.angvel.y = velocity.angvel.y.max(-MAX_ROBOT_TURNING_SPEED);
         }
         if keyboard_input.pressed(KeyCode::W) {
             velocity.linvel.x += ROBOT_SPEED * curr_angle.sin();
             velocity.linvel.z += ROBOT_SPEED * curr_angle.cos();
 
-            velocity.linvel.x = min(velocity.linvel.x, MAX_ROBOT_SPEED);
-            velocity.linvel.z = min(velocity.linvel.z, MAX_ROBOT_SPEED);
+            velocity.linvel.x = velocity.linvel.x.min(MAX_ROBOT_SPEED);
+            velocity.linvel.z = velocity.linvel.z.min(MAX_ROBOT_SPEED);
         }
         if keyboard_input.pressed(KeyCode::S) {
             velocity.linvel.x -= ROBOT_SPEED * curr_angle.sin();
             velocity.linvel.z -= ROBOT_SPEED * curr_angle.cos();
 
-            velocity.linvel.x = max(velocity.linvel.x, -MAX_ROBOT_SPEED);
-            velocity.linvel.z = max(velocity.linvel.z, -MAX_ROBOT_SPEED);
+            velocity.linvel.x = velocity.linvel.x.max(-MAX_ROBOT_SPEED);
+            velocity.linvel.z = velocity.linvel.z.max(-MAX_ROBOT_SPEED);
         }
     }
 }
